@@ -1,0 +1,21 @@
+---
+- name: Download Obsidian .deb Package
+  get_url:
+    url: https://github.com/obsidianmd/obsidian-releases/releases/download/v1.4.16/obsidian_1.4.16_amd64.deb
+    dest: "/tmp/obsidian_1.4.16_amd64.deb"
+- name: Install Obsidian
+  apt:
+    deb: "/tmp/obsidian_1.4.16_amd64.deb"
+  become: true
+  become_method: sudo
+- name: Remove Obsidian .deb file
+  file:
+    path: "/tmp/obsidian_1.4.16_amd64.deb"
+    state: absent
+- name: automation script
+  copy:
+    src: "files/obsidian"
+    dest: "/usr/local/bin/obsidian"
+    mode: "0755"
+  become: true
+  become_method: sudo 

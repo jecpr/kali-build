@@ -1,0 +1,25 @@
+---
+- name: Update apt cache
+  become: true
+  become_method: sudo 
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600 # Cache valid for 1 hour
+
+- name: Install packages
+  apt:
+    name:
+      - jq
+      - pipx
+      - ntpdate
+      - flameshot
+      - xclip
+    state: present
+  become: true
+  become_method: sudo
+
+- name: Set keyboard shortcut for Flameshot in XFCE
+  command: xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super><Shift><Control>s" --create --type string --set "flameshot gui"
+  become: true
+  become_user: "{{ ansible_user_id }}"
+

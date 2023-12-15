@@ -1,0 +1,7 @@
+- name: automation script
+  copy:                                                                                                                                            
+    src: "files/mount-vmshare"
+    dest: "/usr/local/bin/mount-vmshare"
+    mode: "0755"
+  become: true
+  become_method: sudo 

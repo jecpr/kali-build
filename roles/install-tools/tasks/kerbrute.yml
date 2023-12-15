@@ -1,0 +1,11 @@
+---
+- name: Download the kerbrute binary
+  get_url:
+    url: "https://github.com/ropnop/kerbrute/releases/latest/download/kerbrute_linux_amd64"
+    dest: "/tmp/kerbrute"
+    mode: '0755'
+
+- name: Move the binary to the destination path
+  command:
+    cmd: mv "/tmp/kerbrute" "/usr/local/bin/kerbrute"
+  become: yes

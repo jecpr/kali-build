@@ -1,0 +1,39 @@
+---
+- name: Add ngrok GPG Key
+  apt_key:
+    url: https://ngrok-agent.s3.amazonaws.com/ngrok.asc
+    state: present
+  become: true
+  become_method: sudo
+
+- name: Add ngrok Repository
+  apt_repository:
+    repo: 'deb https://ngrok-agent.s3.amazonaws.com buster main'
+    state: present
+  become: true
+  become_method: sudo
+
+- name: Update APT Cache and Install ngrok
+  apt:
+    name: ngrok
+    update_cache: yes
+    state: present
+  become: true
+  become_method: sudo 
+
+- name: Check if ngrok authtoken already exists
+  command: ngrok config view
+  register: ngrok_config
+  failed_when: false
+  changed_when: false
+  become: true
+  become_method: sudo
+
+- name: Add ngrok Authtoken
+  shell: ngrok config add-authtoken {{ ngrok_authtoken }}
+  when: "ngrok_authtoken is defined and ngrok_authtoken|length > 0 and 'authtoken: null' in ngrok_config.stdout"
+  environment:
+    HOME: "{{ ansible_env.HOME }}"
+  become: true
+  become_method: sudo
+

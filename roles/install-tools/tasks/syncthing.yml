@@ -1,0 +1,46 @@
+---
+- name: Check if Syncthing is installed
+  command: which syncthing
+  register: syncthing_installed
+  failed_when: false
+  changed_when: false
+
+- name: Create /etc/apt/keyrings directory if it doesn't exist
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+  become: true
+  when: syncthing_installed.rc != 0
+
+- name: Download Syncthing GPG key
+  get_url:
+    url: https://syncthing.net/release-key.gpg
+    dest: /etc/apt/keyrings/syncthing-archive-keyring.gpg
+    mode: '0644'
+  become: true
+  when: syncthing_installed.rc != 0
+
+- name: Add Syncthing repository
+  apt_repository:
+    repo: deb [signed-by=/etc/apt/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable
+    filename: syncthing
+  become: true
+  when: syncthing_installed.rc != 0
+
+- name: Update apt cache and install Syncthing
+  apt:
+    name: syncthing
+    update_cache: yes
+    state: present
+  become: true
+  when: syncthing_installed.rc != 0
+
+- name: Enable and start Syncthing service
+  systemd:
+    name: syncthing@{{ ansible_user }}.service
+    enabled: yes
+    state: started
+  become: true
+  when: syncthing_installed.rc != 0
+

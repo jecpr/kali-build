@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Get the PID of the current script
+current_pid=$$
+
+# Check if Obsidian is already running (excluding the current script's PID)
+if pgrep -v "$current_pid" -f obsidian >/dev/null; then
+  echo "Killing existing Obsidian process..."
+  pkill -f obsidian
+  sleep 2 # Wait for the process to be killed
+fi
+
+# Start Obsidian using the full path to the executable
+/usr/bin/obsidian >/dev/null 2>&1 &
+
+# Optionally, you can add a delay to give Obsidian some time to start
+sleep 5
+
+# Check if Obsidian is running again
+if pgrep -f obsidian >/dev/null; then
+  echo "Obsidian started successfully."
+else
+  echo "Obsidian failed to start."
+fi
