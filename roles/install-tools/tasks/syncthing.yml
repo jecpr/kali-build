@@ -1,15 +1,15 @@
----
-- name: Check if Syncthing is installed
-  command: which syncthing
-  register: syncthing_installed
-  failed_when: false
-  changed_when: false
-
-- name: Create /etc/apt/keyrings directory if it doesn't exist
-  file:
-    path: /etc/apt/keyrings
-    state: directory
-    mode: '0755'
+---                                                                                                                                                
+- name: Check if Syncthing is installed                                                                                                            
+  command: which syncthing                                                                                                                         
+  register: syncthing_installed                                                                                                                    
+  failed_when: false                                                                                                                               
+  changed_when: false                                                                                                                              
+                                                                                                                                                   
+- name: Create /etc/apt/keyrings directory if it doesn't exist                                                                                     
+  file:                                                                                                                                            
+    path: /etc/apt/keyrings                                                                                                                        
+    state: directory                                                                                                                               
+    mode: '0755'                                                                                                                                   
   become: true
   when: syncthing_installed.rc != 0
 
@@ -36,11 +36,16 @@
   become: true
   when: syncthing_installed.rc != 0
 
-- name: Enable and start Syncthing service
-  systemd:
-    name: syncthing@{{ ansible_user }}.service
-    enabled: yes
-    state: started
-  become: true
-  when: syncthing_installed.rc != 0
+- name: Ensure ~/.config/autostart directory exists
+  file:
+    path: "{{ ansible_env.HOME }}/.config/autostart"
+    state: directory
+    mode: '0755'
+  become: no
 
+- name: Copy syncthing-start.desktop to autostart folder
+  copy:
+    src: /usr/share/applications/syncthing-start.desktop
+    dest: "{{ ansible_env.HOME }}/.config/autostart/syncthing-start.desktop"
+    remote_src: yes
+  become: no
