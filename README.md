@@ -1,4 +1,4 @@
-#Kali Linux CTF Build - Ansible Playbook
+# Kali Linux CTF Build - Ansible Playbook
 
 This is an ansible playbook to set-up and configure a kali machine designed for CTF's like Hack the Box and Try Hack Me. 
 
