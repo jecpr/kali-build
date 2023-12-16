@@ -3,3 +3,101 @@
   copy:
     src: "{{ role_path }}/files/.bashrc"
     dest: "{{ ansible_env.HOME }}"
+
+- name: "Install gnome-terminal package"
+  package:
+    name: "gnome-terminal"
+    state: present  
+  become: true
+  become_method: sudo
+
+- name: "Remove qterminal package"
+  package:
+    name: "qterminal"
+    state: absent  
+  become: true
+  become_method: sudo
+
+- name: "Copy BashRC"
+  copy:
+    src: "{{ role_path }}/files/.bashrc"
+    dest: "{{ ansible_env.HOME }}"
+
+- name: "Ensure dconf-cli is installed"
+  package:
+    name: "dconf-cli"
+    state: present
+  become: true
+  become_method: sudo
+
+- name: Get gnome profile ID
+  become: false
+  command: dconf list "/org/gnome/terminal/legacy/profiles:/"
+  register: dconfprofiles
+  changed_when: false
+
+- name: Set profile ID fact
+  set_fact:
+    profileid: "{{dconfprofiles.stdout_lines[0]}}"
+  when: dconfprofiles.stdout != ""
+  changed_when: false
+
+- name: Set default profile ID
+  set_fact:
+    profileid: ":b1dcc9dd-5262-4d8d-a863-c897e6d979b9/"
+  when: dconfprofiles.stdout == ""
+  changed_when: false
+
+- name: Set profile name
+  become: false
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}visible-name"
+    value: "'Custom Profile'"
+
+- name: Set foreground-color
+  become: false
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}foreground-color"
+    value: "'#A4A4B1B1CDCD'"
+
+- name: Set palette
+  become: false
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}palette"
+    value: "'#F3F3F3F3F3F3:#FFFF3E3E3E3E:#9F9FEFEF0000:#FFFFAFAF0000:#2E2E6C6CFFFF:#9F9E0000FFFF:#2E2EE7E7B6B6:#EEEEEEEEECEC:#F3F3F3F3F3F3:#FFFF84848484:#C5C5F4F46767:#FFFFCCCC5C5C:#5C5CB2B2FFFF:#CFCE8D8DFBFB:#5C5CECECC6C5:#EEEEEEEEECEC'"
+
+- name: Set font
+  become: false
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}font"
+    value: "'Monospace 14'"
+
+- name: Set font
+  become: false
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}use-system-font"
+    value: "false"
+
+- name: Set use-theme-colors
+  become: false
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}use-theme-colors"
+    value: "false"
+
+- name: Set background-color
+  become: false
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}background-color"
+    value: "'#14141D1C2B2B'"
+
+- name: Set use-transparent-background
+  become: false
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}use-transparent-background"
+    value: "false"
+
+- name: Set use-theme-transparency
+  become: false
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}use-theme-transparency"
+    value: "false" 
