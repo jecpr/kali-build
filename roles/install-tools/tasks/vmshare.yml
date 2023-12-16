@@ -1,7 +1,16 @@
-- name: automation script
-  copy:                                                                                                                                            
-    src: "files/mount-vmshare"
+- name: Create a folder in the user's home directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/shares"
+    state: directory
+    mode: '0755'  # Optional: permissions for the directory
+
+- name: Create a script file
+  ansible.builtin.copy:
     dest: "/usr/local/bin/mount-vmshare"
-    mode: "0755"
+    content: |
+      #!/bin/bash
+      /usr/bin/vmhgfs-fuse .host:/ {{ ansible_env.HOME }}/shares -o subtype=vmhgfs-fuse,allow_other
+    mode: '0755'  # Gives execute permissions to the script
   become: true
   become_method: sudo 
+
