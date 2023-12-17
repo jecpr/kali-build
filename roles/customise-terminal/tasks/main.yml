@@ -100,4 +100,14 @@
   become: false
   dconf:
     key: "/org/gnome/terminal/legacy/profiles:/{{profileid}}use-theme-transparency"
-    value: "false" 
+    value: "false"
+
+- name: Change default terminal to GNOME Terminal
+  become: yes
+  command: update-alternatives --set x-terminal-emulator /usr/bin/gnome-terminal.wrapper
+
+- name: Copy Terminator desktop entry to replace the existing launcher
+  copy: 
+    src: /usr/bin/gnome-terminal.wrapper 
+    dest: ~/.config/xfce4/panel/launcher-7/17026008243.desktop 
+    remote_src: yes 
