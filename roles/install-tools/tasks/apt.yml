@@ -14,6 +14,8 @@
       - ntpdate
       - flameshot
       - xclip
+      - gobuster
+      - feroxbuster
     state: present
   become: true
   become_method: sudo
