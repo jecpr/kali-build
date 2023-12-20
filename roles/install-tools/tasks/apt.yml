@@ -16,6 +16,7 @@
       - xclip
       - gobuster
       - feroxbuster
+      - docker.io
     state: present
   become: true
   become_method: sudo
