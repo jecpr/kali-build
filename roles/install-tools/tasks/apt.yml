@@ -17,6 +17,8 @@
       - gobuster
       - feroxbuster
       - docker.io
+      - gdb
+      - ghidra
     state: present
   become: true
   become_method: sudo
