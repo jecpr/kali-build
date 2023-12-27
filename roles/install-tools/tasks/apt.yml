@@ -19,6 +19,8 @@
       - docker.io
       - gdb
       - ghidra
+      - ltrace
+      - strace
     state: present
   become: true
   become_method: sudo
