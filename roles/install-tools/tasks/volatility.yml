@@ -84,6 +84,7 @@
           - ipython
           - capstone
         state: latest
+        extra_args: --ignore-installed
         executable: pip3
 
     - name: Install Volatility 3
