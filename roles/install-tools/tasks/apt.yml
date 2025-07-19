@@ -11,7 +11,7 @@
     name:
       - jq
       - pipx
-      - ntpdate
+      - ntpsec-ntpdate
       - flameshot
       - xclip
       - gobuster
