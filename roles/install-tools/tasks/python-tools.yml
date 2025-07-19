@@ -9,7 +9,3 @@
     - { name: 'certipy-ad', url: 'git+https://github.com/ly4k/Certipy.git' }
     - { name: 'netexec', url: 'git+https://github.com/Pennyw0rth/NetExec' }
 
-- name: Install GitDumper
-  pip:
-    name: git-dumper
-    state: present
