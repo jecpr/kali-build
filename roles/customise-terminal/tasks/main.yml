@@ -12,6 +12,7 @@
   become_method: sudo
 
 - name: "Remove qterminal package"
+  when: false
   package:
     name: "qterminal"
     state: absent  
