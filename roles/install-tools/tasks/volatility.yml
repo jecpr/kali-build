@@ -71,27 +71,27 @@
           - python3-wheel
         state: present
 
-    - name: Install Python 3 dependencies for Volatility 3
-      pip:
-        name: 
-          - distorm3
-          - yara
-          - pycryptodome
-          - pillow
-          - openpyxl
-          - ujson
-          - pytz
-          - ipython
-          - capstone
-        state: latest
-        extra_args: --ignore-installed
-        executable: pip3
+    # - name: Install Python 3 dependencies for Volatility 3
+    #   pip:
+    #     name: 
+    #       - distorm3
+    #       - yara
+    #       - pycryptodome
+    #       - pillow
+    #       - openpyxl
+    #       - ujson
+    #       - pytz
+    #       - ipython
+    #       - capstone
+    #     state: latest
+    #     extra_args: --ignore-installed
+    #     executable: pip3
 
-    - name: Install Volatility 3
-      pip:
-        name: git+https://github.com/volatilityfoundation/volatility3.git
-        state: latest
-        executable: pip3
+    # - name: Install Volatility 3
+    #   pip:
+    #     name: git+https://github.com/volatilityfoundation/volatility3.git
+    #     state: latest
+    #     executable: pip3
 
   become: yes
 
