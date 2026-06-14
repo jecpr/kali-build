@@ -1,0 +1,6 @@
+---
+- name: Configure Burp Suite
+  ansible.builtin.include_tasks: burp.yml
+
+- name: Configure Firefox
+  ansible.builtin.include_tasks: firefox.yml

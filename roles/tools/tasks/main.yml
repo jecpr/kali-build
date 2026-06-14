@@ -1,0 +1,25 @@
+---
+- name: Install APT packages
+  ansible.builtin.include_tasks: apt.yml
+
+- name: Install Python tools
+  ansible.builtin.include_tasks: python-tools.yml
+
+- name: Install Ruby gems
+  ansible.builtin.include_tasks: gem-tools.yml
+
+- name: Download GitHub releases
+  ansible.builtin.include_tasks: github-repos.yml
+
+- name: Install Kerbrute
+  ansible.builtin.include_tasks: kerbrute.yml
+
+- name: Install Obsidian
+  ansible.builtin.include_tasks: obsidian.yml
+
+- name: Install Volatility
+  ansible.builtin.include_tasks: volatility.yml
+  when: install_volatility2 or install_volatility3
+
+- name: Install Syncthing
+  ansible.builtin.include_tasks: syncthing.yml

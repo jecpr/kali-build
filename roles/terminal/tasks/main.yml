@@ -1,0 +1,38 @@
+---
+- name: Ensure zsh is the default shell
+  ansible.builtin.user:
+    name: "{{ username }}"
+    shell: /usr/bin/zsh
+
+- name: Deploy custom .zshrc
+  ansible.builtin.copy:
+    src: .zshrc
+    dest: "{{ home_dir }}/.zshrc"
+    owner: "{{ username }}"
+    mode: "0644"
+  become: false
+
+- name: Create xfce4-terminal config directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.config/xfce4/terminal"
+    state: directory
+    owner: "{{ username }}"
+    mode: "0755"
+  become: false
+
+- name: Deploy xfce4-terminal configuration
+  ansible.builtin.template:
+    src: terminalrc.j2
+    dest: "{{ home_dir }}/.config/xfce4/terminal/terminalrc"
+    owner: "{{ username }}"
+    mode: "0644"
+  become: false
+
+- name: Set flameshot screenshot shortcut
+  ansible.builtin.command:
+    cmd: >
+      xfconf-query -c xfce4-keyboard-shortcuts -n
+      -p "/commands/custom/Super_L+Shift+Ctrl+s"
+      -t string -s "flameshot gui"
+  become: false
+  changed_when: true

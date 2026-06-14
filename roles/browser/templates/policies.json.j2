@@ -1,0 +1,63 @@
+{
+  "policies": {
+    "Certificates": {
+      "ImportEnterpriseRoots": true,
+      "Install": [
+        "/usr/local/share/ca-certificates/BurpSuiteCA.der"
+      ]
+    },
+    "DisableAppUpdate": true,
+    "DisplayBookmarksToolbar": "always",
+    "NoDefaultBookmarks": true,
+    "OverrideFirstRunPage": "",
+    "OverridePostUpdatePage": "",
+    "Homepage": {
+      "URL": "https://google.com",
+      "Locked": false,
+      "StartPage": "homepage"
+    },
+    "SearchEngines": {
+      "Default": "DuckDuckGo",
+      "PreventInstalls": true
+    },
+    "SearchSuggestEnabled": false,
+    "EnableTrackingProtection": {
+      "Value": true,
+      "Cryptomining": true,
+      "Fingerprinting": true
+    },
+    "Cookies": {
+      "AcceptThirdParty": "never",
+      "RejectTracker": true
+    },
+    "DNSOverHTTPS": {
+      "Enabled": false
+    },
+    "DisableTelemetry": true,
+    "DisablePocket": true,
+    "DisableFirefoxStudies": true,
+    "DisableFeedbackCommands": true,
+    "UserMessaging": {
+      "WhatsNew": false,
+      "ExtensionRecommendations": false,
+      "FeatureRecommendations": false,
+      "UrlbarInterventions": false,
+      "SkipOnboarding": true,
+      "MoreFromMozilla": false
+    },
+    "ExtensionSettings": {
+{% for ext in firefox_extensions %}
+      "{{ ext.id }}": {
+        "installation_mode": "force_installed",
+        "install_url": "{{ ext.url }}"
+      }{{ "," if not loop.last else "" }}
+{% endfor %}
+    },
+    "Preferences": {
+      "browser.download.useDownloadDir": false,
+      "layers.acceleration.force-enabled": true,
+      "network.dns.disablePrefetch": true,
+      "network.prefetch-next": false
+    }
+  }
+}

@@ -1,0 +1,41 @@
+---
+- name: Add Syncthing GPG key
+  ansible.builtin.get_url:
+    url: https://syncthing.net/release-key.gpg
+    dest: /usr/share/keyrings/syncthing-archive-keyring.gpg
+    mode: "0644"
+
+- name: Add Syncthing repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable"
+    filename: syncthing
+    state: present
+
+- name: Install Syncthing
+  ansible.builtin.apt:
+    name: syncthing
+    state: present
+    update_cache: true
+
+- name: Create autostart directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.config/autostart"
+    state: directory
+    owner: "{{ username }}"
+    mode: "0755"
+  become: false
+
+- name: Enable Syncthing autostart
+  ansible.builtin.copy:
+    dest: "{{ home_dir }}/.config/autostart/syncthing-start.desktop"
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Syncthing
+      Exec=syncthing serve --no-browser
+      Hidden=false
+      NoDisplay=false
+      X-GNOME-Autostart-enabled=true
+    owner: "{{ username }}"
+    mode: "0644"
+  become: false

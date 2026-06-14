@@ -1,0 +1,115 @@
+---
+# User configuration
+username: "{{ ansible_user_id }}"
+home_dir: "{{ ansible_env.HOME }}"
+
+# Terminal
+terminal_font: "Monospace 14"
+terminal_bg: "#141c2b"
+terminal_fg: "#a4b1cd"
+
+# APT packages
+apt_packages:
+  - jq
+  - pipx
+  - ntpsec-ntpdate
+  - flameshot
+  - xclip
+  - gobuster
+  - feroxbuster
+  - docker.io
+  - gdb
+  - ghidra
+  - ltrace
+  - strace
+  - tmux
+
+# Python tools (installed via pipx)
+pipx_tools:
+  - name: impacket
+    source: "git+https://github.com/fortra/impacket.git"
+  - name: certipy-ad
+    source: "git+https://github.com/ly4k/Certipy.git"
+  - name: netexec
+    source: "git+https://github.com/Pennyw0rth/NetExec.git"
+
+# Ruby gems
+gem_packages:
+  - logger
+  - stringio
+  - winrm
+  - builder
+  - erubi
+  - gssapi
+  - gyoku
+  - httpclient
+  - logging
+  - little-plugger
+  - nori
+  - rubyntlm
+  - winrm-fs
+  - evil-winrm
+
+# GitHub release downloads (regex, repo, destination)
+github_releases:
+  - repo: jpillora/chisel
+    pattern: "_linux_amd64.gz$"
+    dest: /opt/chisel
+  - repo: jpillora/chisel
+    pattern: "_windows_amd64.gz$"
+    dest: /opt/chisel
+  - repo: peass-ng/PEASS-ng
+    pattern: "linpeas.sh$"
+    dest: /opt/peas
+  - repo: peass-ng/PEASS-ng
+    pattern: "winPEASx64.exe$"
+    dest: /opt/peas
+  - repo: WithSecureLabs/chainsaw
+    pattern: "x86_64.*linux"
+    dest: /opt/
+  - repo: SpecterOps/BloodHound
+    pattern: "linux-x64"
+    dest: /opt/
+
+# GitHub repos to clone
+github_repos:
+  - repo: https://github.com/Flangvik/SharpCollection.git
+    dest: /opt/SharpCollection
+  - repo: https://github.com/danielmiessler/SecLists.git
+    dest: /opt/SecLists
+  - repo: https://github.com/SigmaHQ/sigma.git
+    dest: /opt/sigma
+
+# Burp Suite extras
+burp_extras:
+  - url: https://repo1.maven.org/maven2/org/jruby/jruby-dist/9.4.0.0/jruby-dist-9.4.0.0-bin.tar.gz
+    dest: /usr/local/lib/BurpSuite/jruby.jar
+    creates: /usr/local/lib/BurpSuite/jruby.jar
+  - url: https://repo1.maven.org/maven2/org/python/jython-standalone/2.7.3/jython-standalone-2.7.3.jar
+    dest: /usr/local/lib/BurpSuite/jython.jar
+    creates: /usr/local/lib/BurpSuite/jython.jar
+
+# Firefox extensions
+firefox_extensions:
+  - name: Dark Reader
+    url: https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi
+    id: addon@darkreader.org
+  - name: FoxyProxy Standard
+    url: https://addons.mozilla.org/firefox/downloads/latest/foxyproxy-standard/latest.xpi
+    id: foxyproxy@eric.h.jung
+  - name: Wappalyzer
+    url: https://addons.mozilla.org/firefox/downloads/latest/wappalyzer/latest.xpi
+    id: wappalyzer@AY
+
+# VS Code extensions
+vscode_extensions:
+  - streetsidesoftware.code-spell-checker
+  - DEVSENSE.phptools-vscode
+  - snyk-security.snyk-vulnerability-scanner
+
+# Obsidian version
+obsidian_version: "1.8.10"
+
+# Volatility
+install_volatility2: true
+install_volatility3: true

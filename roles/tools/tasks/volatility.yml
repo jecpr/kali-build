@@ -1,0 +1,55 @@
+---
+# Volatility 3 via pipx
+- name: Install Volatility 3 via pipx
+  community.general.pipx:
+    name: volatility3
+    source: "git+https://github.com/volatilityfoundation/volatility3.git"
+    state: present
+  become: false
+  when: install_volatility3
+
+# Volatility 2 (requires Python 2)
+- name: Install Volatility 2 dependencies
+  ansible.builtin.apt:
+    name:
+      - build-essential
+      - git
+      - libdistorm3-dev
+      - yara
+      - libraw1394-11
+      - libcapstone-dev
+      - capstone-tool
+      - tzdata
+      - python2
+      - python2.7-dev
+      - libpython2-dev
+    state: present
+  when: install_volatility2
+
+- name: Install Volatility 2 Python dependencies
+  ansible.builtin.pip:
+    name:
+      - distorm3
+      - yara
+      - pycrypto
+      - pillow
+      - openpyxl
+      - ujson
+      - pytz
+      - ipython
+      - capstone
+    executable: pip2
+  when: install_volatility2
+
+- name: Clone Volatility 2
+  ansible.builtin.git:
+    repo: https://github.com/volatilityfoundation/volatility.git
+    dest: /opt/volatility2
+    depth: 1
+  when: install_volatility2
+
+- name: Install Volatility 2
+  ansible.builtin.pip:
+    name: /opt/volatility2
+    executable: pip2
+  when: install_volatility2

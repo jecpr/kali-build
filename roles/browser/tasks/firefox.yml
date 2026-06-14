@@ -1,0 +1,12 @@
+---
+- name: Create Firefox distribution directory
+  ansible.builtin.file:
+    path: /usr/share/firefox-esr/distribution
+    state: directory
+    mode: "0755"
+
+- name: Deploy Firefox policies
+  ansible.builtin.template:
+    src: policies.json.j2
+    dest: /usr/share/firefox-esr/distribution/policies.json
+    mode: "0644"

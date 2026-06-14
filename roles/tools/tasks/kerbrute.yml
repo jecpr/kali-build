@@ -1,0 +1,6 @@
+---
+- name: Download Kerbrute
+  ansible.builtin.get_url:
+    url: https://github.com/ropnop/kerbrute/releases/latest/download/kerbrute_linux_amd64
+    dest: /usr/local/bin/kerbrute
+    mode: "0755"

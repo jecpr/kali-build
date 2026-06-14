@@ -1,0 +1,52 @@
+{
+  "user_options": {
+    "display": {
+      "user_interface": {
+        "look_and_feel": "DARK",
+        "font_size": 16
+      },
+      "http_message_display": {
+        "font_size": 16
+      }
+    },
+    "extender": {
+      "extensions": [],
+      "settings": {
+        "path_to_jruby": "/usr/local/lib/BurpSuite/jruby.jar",
+        "path_to_jython": "/usr/local/lib/BurpSuite/jython.jar",
+        "auto_reload_on_startup": true,
+        "auto_update_on_startup": true
+      }
+    },
+    "proxy": {
+      "intercept_client_requests": {
+        "do_intercept": "intercept"
+      }
+    },
+    "misc": {
+      "hotkeys": [
+        { "action": "send_to_repeater", "hotkey": "Ctrl+R" },
+        { "action": "send_to_intruder", "hotkey": "Ctrl+I" },
+        { "action": "toggle_proxy_interception", "hotkey": "Ctrl+T" },
+        { "action": "issue_repeater_request", "hotkey": "Ctrl+Space" },
+        { "action": "switch_to_dashboard", "hotkey": "Ctrl+Shift+D" },
+        { "action": "switch_to_target", "hotkey": "Ctrl+Shift+T" },
+        { "action": "switch_to_proxy", "hotkey": "Ctrl+Shift+P" },
+        { "action": "switch_to_intruder", "hotkey": "Ctrl+Shift+I" },
+        { "action": "switch_to_repeater", "hotkey": "Ctrl+Shift+R" },
+        { "action": "switch_to_logger", "hotkey": "Ctrl+Shift+L" },
+        { "action": "switch_to_extensions", "hotkey": "Ctrl+Shift+E" }
+      ]
+    },
+    "ssl": {
+      "enable_blocked_algorithms": true
+    },
+    "project_options": {
+      "auto_backup": {
+        "enabled": true,
+        "interval_minutes": 30,
+        "delete_on_shutdown": true
+      }
+    }
+  }
+}

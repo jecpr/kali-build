@@ -1,0 +1,4 @@
+#!/bin/bash
+pkill -f obsidian 2>/dev/null
+sleep 1
+/opt/Obsidian/obsidian --no-sandbox "$@" &

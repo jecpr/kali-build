@@ -1,0 +1,36 @@
+---
+- name: Copy Burp CA extraction script
+  ansible.builtin.copy:
+    src: getburpcert.sh
+    dest: /usr/local/bin/getburpcert.sh
+    mode: "0755"
+
+- name: Create BurpSuite lib directory
+  ansible.builtin.file:
+    path: /usr/local/lib/BurpSuite
+    state: directory
+    mode: "0755"
+
+- name: Download Burp Suite extras
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "0644"
+    creates: "{{ item.creates }}"
+  loop: "{{ burp_extras }}"
+
+- name: Create BurpSuite config directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.BurpSuite"
+    state: directory
+    owner: "{{ username }}"
+    mode: "0755"
+  become: false
+
+- name: Deploy Burp Suite Community config
+  ansible.builtin.template:
+    src: UserConfigCommunity.json.j2
+    dest: "{{ home_dir }}/.BurpSuite/UserConfigCommunity.json"
+    owner: "{{ username }}"
+    mode: "0644"
+  become: false

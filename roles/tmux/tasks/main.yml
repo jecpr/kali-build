@@ -1,0 +1,8 @@
+---
+- name: Deploy tmux configuration
+  ansible.builtin.copy:
+    src: .tmux.conf
+    dest: "{{ home_dir }}/.tmux.conf"
+    owner: "{{ username }}"
+    mode: "0644"
+  become: false

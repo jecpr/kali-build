@@ -1,0 +1,22 @@
+---
+- name: Download Obsidian .deb
+  ansible.builtin.get_url:
+    url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v{{ obsidian_version }}/obsidian_{{ obsidian_version }}_amd64.deb"
+    dest: "/tmp/obsidian_{{ obsidian_version }}_amd64.deb"
+    mode: "0644"
+
+- name: Install Obsidian
+  ansible.builtin.apt:
+    deb: "/tmp/obsidian_{{ obsidian_version }}_amd64.deb"
+    state: present
+
+- name: Deploy Obsidian launcher script
+  ansible.builtin.copy:
+    src: obsidian
+    dest: /usr/local/bin/obsidian
+    mode: "0755"
+
+- name: Clean up Obsidian .deb
+  ansible.builtin.file:
+    path: "/tmp/obsidian_{{ obsidian_version }}_amd64.deb"
+    state: absent
