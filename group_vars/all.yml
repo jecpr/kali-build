@@ -23,6 +23,8 @@ apt_packages:
   - ltrace
   - strace
   - tmux
+  - rustc
+  - cargo
 
 # Python tools (installed via pipx)
 pipx_tools:
