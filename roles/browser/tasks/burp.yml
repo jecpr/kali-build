@@ -25,7 +25,6 @@
     state: directory
     owner: "{{ username }}"
     mode: "0755"
-  become: false
 
 - name: Deploy Burp Suite Community config
   ansible.builtin.template:
@@ -33,4 +32,3 @@
     dest: "{{ home_dir }}/.BurpSuite/UserConfigCommunity.json"
     owner: "{{ username }}"
     mode: "0644"
-  become: false

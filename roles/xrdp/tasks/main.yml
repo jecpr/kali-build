@@ -18,7 +18,6 @@
     content: "xfce4-session"
     owner: "{{ username }}"
     mode: "0644"
-  become: false
 
 - name: Set default session for xrdp
   ansible.builtin.lineinfile:

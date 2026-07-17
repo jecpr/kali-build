@@ -10,7 +10,7 @@
     dest: "{{ home_dir }}/.zshrc"
     owner: "{{ username }}"
     mode: "0644"
-  become: false
+
 
 - name: Create xfce4-terminal config directory
   ansible.builtin.file:
@@ -18,7 +18,7 @@
     state: directory
     owner: "{{ username }}"
     mode: "0755"
-  become: false
+
 
 - name: Deploy xfce4-terminal configuration
   ansible.builtin.template:
@@ -26,7 +26,7 @@
     dest: "{{ home_dir }}/.config/xfce4/terminal/terminalrc"
     owner: "{{ username }}"
     mode: "0644"
-  become: false
+
 
 - name: Set flameshot screenshot shortcut
   ansible.builtin.command:
@@ -34,5 +34,5 @@
       xfconf-query -c xfce4-keyboard-shortcuts -n
       -p "/commands/custom/Super_L+Shift+Ctrl+s"
       -t string -s "flameshot gui"
-  become: false
+
   changed_when: true
