@@ -17,6 +17,9 @@ def get_latest_release(repo):
     url = f"https://api.github.com/repos/{repo}/releases/latest"
     req = urllib.request.Request(url)
     req.add_header("Accept", "application/vnd.github.v3+json")
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        req.add_header("Authorization", f"token {token}")
     with urllib.request.urlopen(req) as resp:
         return json.loads(resp.read().decode())
 

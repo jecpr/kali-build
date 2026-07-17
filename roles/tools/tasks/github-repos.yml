@@ -19,8 +19,11 @@
       {{ item.repo }}
       "{{ item.pattern }}"
       -o {{ item.dest }}
+  environment:
+    GITHUB_TOKEN: "{{ github_token | default('') }}"
   loop: "{{ github_releases }}"
   changed_when: true
+  ignore_errors: true
 
 - name: Clone GitHub repositories
   ansible.builtin.git:
