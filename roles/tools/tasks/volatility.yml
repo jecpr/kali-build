@@ -9,7 +9,7 @@
   when: install_volatility3
 
 # Volatility 2 (requires Python 2)
-- name: Install Volatility 2 dependencies
+- name: Install Volatility 2 system dependencies
   ansible.builtin.apt:
     name:
       - build-essential
@@ -26,33 +26,35 @@
     state: present
   when: install_volatility2
 
+- name: Check if pip2 is installed
+  ansible.builtin.command:
+    cmd: python2 -m pip --version
+  register: pip2_check
+  changed_when: false
+  failed_when: false
+  when: install_volatility2
+
 - name: Download get-pip.py for Python 2
   ansible.builtin.get_url:
     url: https://bootstrap.pypa.io/pip/2.7/get-pip.py
     dest: /tmp/get-pip2.py
-    mode: "0644"
-  when: install_volatility2
+    mode: "0755"
+  when: install_volatility2 and pip2_check.rc != 0
 
-- name: Install pip2
+- name: Bootstrap pip2
   ansible.builtin.command:
     cmd: python2 /tmp/get-pip2.py
-    creates: /usr/local/bin/pip2
-  when: install_volatility2
+  when: install_volatility2 and pip2_check.rc != 0
+  changed_when: true
 
 - name: Install Volatility 2 Python dependencies
-  ansible.builtin.pip:
-    name:
-      - distorm3
-      - yara
-      - pycrypto
-      - pillow
-      - openpyxl
-      - ujson
-      - pytz
-      - ipython
-      - capstone
-    executable: pip2
+  ansible.builtin.command:
+    cmd: >
+      python2 -m pip install
+      distorm3 yara pycrypto pillow openpyxl
+      ujson pytz ipython capstone
   when: install_volatility2
+  changed_when: true
 
 - name: Clone Volatility 2
   ansible.builtin.git:
@@ -62,7 +64,7 @@
   when: install_volatility2
 
 - name: Install Volatility 2
-  ansible.builtin.pip:
-    name: /opt/volatility2
-    executable: pip2
+  ansible.builtin.command:
+    cmd: python2 -m pip install /opt/volatility2
   when: install_volatility2
+  changed_when: true
