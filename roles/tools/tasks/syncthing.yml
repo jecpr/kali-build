@@ -26,7 +26,6 @@
     state: directory
     owner: "{{ username }}"
     mode: "0755"
-  become: false
 
 - name: Enable Syncthing autostart
   ansible.builtin.copy:
@@ -41,4 +40,3 @@
       X-GNOME-Autostart-enabled=true
     owner: "{{ username }}"
     mode: "0644"
-  become: false
