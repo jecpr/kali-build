@@ -6,9 +6,12 @@
     mode: "0644"
 
 - name: Add Syncthing repository
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable"
-    filename: syncthing
+  ansible.builtin.deb822_repository:
+    name: syncthing
+    uris: https://apt.syncthing.net/
+    suites: syncthing
+    components: stable
+    signed_by: /usr/share/keyrings/syncthing-archive-keyring.gpg
     state: present
 
 - name: Install Syncthing

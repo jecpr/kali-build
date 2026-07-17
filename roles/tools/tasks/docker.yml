@@ -7,6 +7,12 @@
       - gnupg
     state: present
 
+- name: Create keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
 - name: Add Docker GPG key
   ansible.builtin.get_url:
     url: https://download.docker.com/linux/debian/gpg
@@ -14,9 +20,13 @@
     mode: "0644"
 
 - name: Add Docker repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian bookworm stable"
-    filename: docker
+  ansible.builtin.deb822_repository:
+    name: docker
+    uris: https://download.docker.com/linux/debian
+    suites: bookworm
+    components: stable
+    architectures: amd64
+    signed_by: /etc/apt/keyrings/docker.asc
     state: present
 
 - name: Install Docker CE
