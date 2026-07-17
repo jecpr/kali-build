@@ -13,6 +13,7 @@
     - browser
     - system
     - tmux
+    - xrdp
     - role: gantsign.visual-studio-code
       become: false
       vars:

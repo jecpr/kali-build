@@ -1,0 +1,33 @@
+---
+- name: Install xrdp
+  ansible.builtin.apt:
+    name:
+      - xrdp
+      - xorgxrdp
+    state: present
+
+- name: Add xrdp user to ssl-cert group
+  ansible.builtin.user:
+    name: xrdp
+    groups: ssl-cert
+    append: true
+
+- name: Configure xrdp to use XFCE
+  ansible.builtin.copy:
+    dest: "{{ home_dir }}/.xsession"
+    content: "xfce4-session"
+    owner: "{{ username }}"
+    mode: "0644"
+  become: false
+
+- name: Set default session for xrdp
+  ansible.builtin.lineinfile:
+    path: /etc/xrdp/startwm.sh
+    regexp: "^test -x /etc/X11/Xsession"
+    line: "startxfce4"
+
+- name: Enable and start xrdp
+  ansible.builtin.systemd:
+    name: xrdp
+    enabled: true
+    state: started

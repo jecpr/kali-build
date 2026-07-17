@@ -26,6 +26,19 @@
     state: present
   when: install_volatility2
 
+- name: Download get-pip.py for Python 2
+  ansible.builtin.get_url:
+    url: https://bootstrap.pypa.io/pip/2.7/get-pip.py
+    dest: /tmp/get-pip2.py
+    mode: "0644"
+  when: install_volatility2
+
+- name: Install pip2
+  ansible.builtin.command:
+    cmd: python2 /tmp/get-pip2.py
+    creates: /usr/local/bin/pip2
+  when: install_volatility2
+
 - name: Install Volatility 2 Python dependencies
   ansible.builtin.pip:
     name:
