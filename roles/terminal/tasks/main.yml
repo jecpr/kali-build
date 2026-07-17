@@ -11,14 +11,12 @@
     owner: "{{ username }}"
     mode: "0644"
 
-
 - name: Create xfce4-terminal config directory
   ansible.builtin.file:
     path: "{{ home_dir }}/.config/xfce4/terminal"
     state: directory
     owner: "{{ username }}"
     mode: "0755"
-
 
 - name: Deploy xfce4-terminal configuration
   ansible.builtin.template:
@@ -27,12 +25,25 @@
     owner: "{{ username }}"
     mode: "0644"
 
+- name: Create xfce4 keyboard shortcuts config directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.config/xfce4/xfconf/xfce-perchannel-xml"
+    state: directory
+    owner: "{{ username }}"
+    mode: "0755"
 
-- name: Set flameshot screenshot shortcut
-  ansible.builtin.command:
-    cmd: >
-      xfconf-query -c xfce4-keyboard-shortcuts -n
-      -p "/commands/custom/Super_L+Shift+Ctrl+s"
-      -t string -s "flameshot gui"
-
-  changed_when: true
+- name: Deploy flameshot keyboard shortcut
+  ansible.builtin.copy:
+    dest: "{{ home_dir }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
+    content: |
+      <?xml version="1.0" encoding="UTF-8"?>
+      <channel name="xfce4-keyboard-shortcuts" version="1.0">
+        <property name="commands" type="empty">
+          <property name="custom" type="empty">
+            <property name="&lt;Super&gt;&lt;Shift&gt;&lt;Ctrl&gt;s" type="string" value="flameshot gui"/>
+          </property>
+        </property>
+      </channel>
+    owner: "{{ username }}"
+    mode: "0644"
+    force: false
