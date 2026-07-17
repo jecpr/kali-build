@@ -60,10 +60,8 @@ github_repos:
 burp_extras:
   - url: https://repo1.maven.org/maven2/org/jruby/jruby-dist/9.4.0.0/jruby-dist-9.4.0.0-bin.tar.gz
     dest: /usr/local/lib/BurpSuite/jruby.jar
-    creates: /usr/local/lib/BurpSuite/jruby.jar
   - url: https://repo1.maven.org/maven2/org/python/jython-standalone/2.7.3/jython-standalone-2.7.3.jar
     dest: /usr/local/lib/BurpSuite/jython.jar
-    creates: /usr/local/lib/BurpSuite/jython.jar
 
 # Firefox extensions
 firefox_extensions:

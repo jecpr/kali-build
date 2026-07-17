@@ -11,13 +11,19 @@
     state: directory
     mode: "0755"
 
+- name: Check if Burp Suite extras exist
+  ansible.builtin.stat:
+    path: "{{ item.dest }}"
+  loop: "{{ burp_extras }}"
+  register: burp_extras_stat
+
 - name: Download Burp Suite extras
   ansible.builtin.get_url:
-    url: "{{ item.url }}"
-    dest: "{{ item.dest }}"
+    url: "{{ item.item.url }}"
+    dest: "{{ item.item.dest }}"
     mode: "0644"
-    creates: "{{ item.creates }}"
-  loop: "{{ burp_extras }}"
+  loop: "{{ burp_extras_stat.results }}"
+  when: not item.stat.exists
 
 - name: Create BurpSuite config directory
   ansible.builtin.file:
