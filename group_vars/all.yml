@@ -1,7 +1,7 @@
 ---
 # User configuration
-username: "{{ ansible_user_id }}"
-home_dir: "{{ ansible_env.HOME }}"
+username: "{{ ansible_facts['user_id'] }}"
+home_dir: "{{ ansible_facts['env']['HOME'] }}"
 
 # Terminal
 terminal_font: "Monospace 14"
@@ -37,7 +37,7 @@ apt_pentest_packages:
 # GitHub release downloads (tools needed as portable binaries for target transfer)
 github_releases:
   - repo: jpillora/chisel
-    pattern: "_windows_amd64.gz$"
+    pattern: "_windows_amd64\\.zip$"
     dest: /opt/chisel
   - repo: peass-ng/PEASS-ng
     pattern: "linpeas.sh$"
