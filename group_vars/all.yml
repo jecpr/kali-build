@@ -8,55 +8,34 @@ terminal_font: "Monospace 14"
 terminal_bg: "#141c2b"
 terminal_fg: "#a4b1cd"
 
-# APT packages
+# APT packages - core tools
 apt_packages:
   - jq
   - pipx
   - ntpsec-ntpdate
   - flameshot
   - xclip
-  - gobuster
-  - feroxbuster
-  - docker.io
   - gdb
   - ghidra
   - ltrace
   - strace
   - tmux
-  - rustc
-  - cargo
 
-# Python tools (installed via pipx)
-pipx_tools:
-  - name: impacket
-    source: "git+https://github.com/fortra/impacket.git"
-  - name: certipy-ad
-    source: "git+https://github.com/ly4k/Certipy.git"
-  - name: netexec
-    source: "git+https://github.com/Pennyw0rth/NetExec.git"
-
-# Ruby gems
-gem_packages:
-  - logger
-  - stringio
-  - winrm
-  - builder
-  - erubi
-  - gssapi
-  - gyoku
-  - httpclient
-  - logging
-  - little-plugger
-  - nori
-  - rubyntlm
-  - winrm-fs
+# APT packages - pentesting tools (available in Kali repos)
+apt_pentest_packages:
+  - netexec
+  - python3-impacket
+  - impacket-scripts
+  - certipy-ad
+  - bloodyad
   - evil-winrm
+  - gobuster
+  - feroxbuster
+  - chisel
+  - seclists
 
-# GitHub release downloads (regex, repo, destination)
+# GitHub release downloads (tools needed as portable binaries for target transfer)
 github_releases:
-  - repo: jpillora/chisel
-    pattern: "_linux_amd64.gz$"
-    dest: /opt/chisel
   - repo: jpillora/chisel
     pattern: "_windows_amd64.gz$"
     dest: /opt/chisel
@@ -69,16 +48,11 @@ github_releases:
   - repo: WithSecureLabs/chainsaw
     pattern: "x86_64.*linux"
     dest: /opt/
-  - repo: SpecterOps/BloodHound
-    pattern: "linux-x64"
-    dest: /opt/
 
 # GitHub repos to clone
 github_repos:
   - repo: https://github.com/Flangvik/SharpCollection.git
     dest: /opt/SharpCollection
-  - repo: https://github.com/danielmiessler/SecLists.git
-    dest: /opt/SecLists
   - repo: https://github.com/SigmaHQ/sigma.git
     dest: /opt/sigma
 
@@ -108,9 +82,6 @@ vscode_extensions:
   - streetsidesoftware.code-spell-checker
   - DEVSENSE.phptools-vscode
   - snyk-security.snyk-vulnerability-scanner
-
-# Obsidian version
-obsidian_version: "1.8.10"
 
 # Volatility
 install_volatility2: true

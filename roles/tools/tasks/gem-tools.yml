@@ -1,7 +1,0 @@
----
-- name: Install Ruby gems
-  community.general.gem:
-    name: "{{ item }}"
-    state: present
-    user_install: false
-  loop: "{{ gem_packages }}"

@@ -4,7 +4,12 @@
     update_cache: true
     cache_valid_time: 3600
 
-- name: Install packages
+- name: Install core packages
   ansible.builtin.apt:
     name: "{{ apt_packages }}"
+    state: present
+
+- name: Install pentesting tools
+  ansible.builtin.apt:
+    name: "{{ apt_pentest_packages }}"
     state: present

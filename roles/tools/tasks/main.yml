@@ -2,11 +2,8 @@
 - name: Install APT packages
   ansible.builtin.include_tasks: apt.yml
 
-- name: Install Python tools
-  ansible.builtin.include_tasks: python-tools.yml
-
-- name: Install Ruby gems
-  ansible.builtin.include_tasks: gem-tools.yml
+- name: Install Docker CE
+  ansible.builtin.include_tasks: docker.yml
 
 - name: Download GitHub releases
   ansible.builtin.include_tasks: github-repos.yml
@@ -16,6 +13,9 @@
 
 - name: Install Obsidian
   ansible.builtin.include_tasks: obsidian.yml
+
+- name: Install BloodHound CE
+  ansible.builtin.include_tasks: bloodhound.yml
 
 - name: Install Volatility
   ansible.builtin.include_tasks: volatility.yml
