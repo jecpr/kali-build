@@ -10,7 +10,7 @@ Ansible playbook to customise a fresh Kali Linux install with pentesting tools, 
 - **Docker**: Installs Docker CE from Docker's official repo with Compose plugin
 - **Browser**: Firefox ESR policies (privacy, extensions, Burp CA) and Burp Suite configuration
 - **System**: Passwordless sudo, VS Code, Syncthing, Obsidian
-- **Volatility**: Both Volatility 2 and 3 for memory forensics
+- **Volatility 3**: Memory forensics via pipx
 
 ## Prerequisites
 
@@ -40,7 +40,6 @@ All variables are in `group_vars/all.yml`. Key options:
 | `terminal_font` | `Monospace 14` | Terminal font |
 | `terminal_bg` | `#141c2b` | Terminal background colour |
 | `terminal_fg` | `#a4b1cd` | Terminal foreground colour |
-| `install_volatility2` | `true` | Install Volatility 2 (requires Python 2) |
 | `install_volatility3` | `true` | Install Volatility 3 |
 
 ## Notes

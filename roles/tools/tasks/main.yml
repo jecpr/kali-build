@@ -17,9 +17,9 @@
 - name: Install BloodHound CE
   ansible.builtin.include_tasks: bloodhound.yml
 
-- name: Install Volatility
+- name: Install Volatility 3
   ansible.builtin.include_tasks: volatility.yml
-  when: install_volatility2 or install_volatility3
+  when: install_volatility3
 
 - name: Install Syncthing
   ansible.builtin.include_tasks: syncthing.yml

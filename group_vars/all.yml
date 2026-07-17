@@ -84,5 +84,4 @@ vscode_extensions:
   - snyk-security.snyk-vulnerability-scanner
 
 # Volatility
-install_volatility2: true
 install_volatility3: true
