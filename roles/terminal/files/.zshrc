@@ -1,5 +1,9 @@
 # ~/.zshrc - Kali Linux custom configuration
 
+# Disable autosuggestions
+ZSH_AUTOSUGGEST_ENABLED=false
+unset ZSH_AUTOSUGGEST_STRATEGY
+
 # History
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
