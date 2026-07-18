@@ -1,4 +1,17 @@
 ---
+- name: Ensure en_US.UTF-8 locale is generated
+  ansible.builtin.lineinfile:
+    path: /etc/locale.gen
+    regexp: "^#?\\s*en_US.UTF-8 UTF-8"
+    line: "en_US.UTF-8 UTF-8"
+  register: locale_gen
+
+- name: Generate locales
+  ansible.builtin.command:
+    cmd: locale-gen
+  when: locale_gen.changed
+  changed_when: true
+
 - name: Install xfce4-terminal
   ansible.builtin.apt:
     name: xfce4-terminal
