@@ -17,11 +17,18 @@
     name: xfce4-terminal
     state: present
 
-- name: Remove qterminal
-  ansible.builtin.apt:
-    name: qterminal
-    state: absent
-    autoremove: true
+- name: Override qterminal desktop entry to launch xfce4-terminal
+  ansible.builtin.copy:
+    dest: /usr/share/applications/qterminal.desktop
+    content: |
+      [Desktop Entry]
+      Name=Terminal Emulator
+      Comment=Use the command line
+      Exec=xfce4-terminal
+      Icon=org.xfce.terminalemulator
+      Type=Application
+      Categories=System;TerminalEmulator;
+    mode: "0644"
 
 - name: Register xfce4-terminal as terminal alternative
   ansible.builtin.command:
