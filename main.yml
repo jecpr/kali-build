@@ -14,9 +14,4 @@
     - system
     - tmux
     - xrdp
-    - role: gantsign.visual-studio-code
-      become: false
-      vars:
-        users:
-          - username: "{{ username }}"
-            visual_studio_code_extensions: "{{ vscode_extensions }}"
+    - vscode
