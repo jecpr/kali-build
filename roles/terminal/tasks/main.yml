@@ -1,4 +1,14 @@
 ---
+- name: Install xfce4-terminal
+  ansible.builtin.apt:
+    name: xfce4-terminal
+    state: present
+
+- name: Set xfce4-terminal as default terminal emulator
+  community.general.alternatives:
+    name: x-terminal-emulator
+    path: /usr/bin/xfce4-terminal
+
 - name: Ensure zsh is the default shell
   ansible.builtin.user:
     name: "{{ username }}"
