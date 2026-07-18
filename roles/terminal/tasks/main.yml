@@ -27,21 +27,6 @@
     cmd: update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal
   changed_when: true
 
-- name: Find XFCE panel terminal launcher files
-  ansible.builtin.find:
-    paths: "{{ home_dir }}/.config/xfce4/panel"
-    patterns: "*.desktop"
-    recurse: true
-    contains: "^Exec=.*qterminal.*"
-  register: panel_launchers
-
-- name: Update panel launchers to use xfce4-terminal
-  ansible.builtin.lineinfile:
-    path: "{{ item.path }}"
-    regexp: "^Exec=.*qterminal.*"
-    line: "Exec=xfce4-terminal"
-  loop: "{{ panel_launchers.files }}"
-  when: panel_launchers.matched > 0
 
 - name: Ensure zsh is the default shell
   ansible.builtin.user:
