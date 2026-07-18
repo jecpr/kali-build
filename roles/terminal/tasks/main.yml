@@ -17,18 +17,13 @@
     name: xfce4-terminal
     state: present
 
-- name: Override qterminal desktop entry to launch xfce4-terminal
+- name: Create qterminal wrapper that launches xfce4-terminal
   ansible.builtin.copy:
-    dest: /usr/share/applications/qterminal.desktop
+    dest: /usr/local/bin/qterminal
     content: |
-      [Desktop Entry]
-      Name=Terminal Emulator
-      Comment=Use the command line
-      Exec=xfce4-terminal
-      Icon=org.xfce.terminalemulator
-      Type=Application
-      Categories=System;TerminalEmulator;
-    mode: "0644"
+      #!/bin/bash
+      exec /usr/bin/xfce4-terminal "$@"
+    mode: "0755"
 
 - name: Register xfce4-terminal as terminal alternative
   ansible.builtin.command:
