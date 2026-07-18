@@ -32,13 +32,13 @@
     paths: "{{ home_dir }}/.config/xfce4/panel"
     patterns: "*.desktop"
     recurse: true
-    contains: "qterminal|x-terminal-emulator|Terminal"
+    contains: "^Exec=.*qterminal.*"
   register: panel_launchers
 
 - name: Update panel launchers to use xfce4-terminal
   ansible.builtin.lineinfile:
     path: "{{ item.path }}"
-    regexp: "^Exec=.*"
+    regexp: "^Exec=.*qterminal.*"
     line: "Exec=xfce4-terminal"
   loop: "{{ panel_launchers.files }}"
   when: panel_launchers.matched > 0
