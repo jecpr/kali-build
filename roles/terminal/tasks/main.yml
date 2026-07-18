@@ -18,9 +18,9 @@
     state: present
 
 - name: Set xfce4-terminal as default terminal emulator
-  community.general.alternatives:
-    name: x-terminal-emulator
-    path: /usr/bin/xfce4-terminal
+  ansible.builtin.command:
+    cmd: update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal
+  changed_when: true
 
 - name: Ensure zsh is the default shell
   ansible.builtin.user:
